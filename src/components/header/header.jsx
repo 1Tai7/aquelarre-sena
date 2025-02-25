@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./../../assets/logo-aquellare-app.png";
 import "./header.css";
@@ -5,6 +6,7 @@ import Modal from "../modal/modal";
 
 const Header = () => {
   const navigate = useNavigate();
+  const data = sessionStorage.getItem("data");
 
   const handleHome = () => {
     navigate("/");
@@ -23,7 +25,7 @@ const Header = () => {
           <h1>Aquelarre</h1>
         </div>
         <div className="header-search-bar">
-          <input type="search" placeholder="# palabra clave" />
+          <input type="search" role="search" placeholder="# palabra clave" />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -41,9 +43,17 @@ const Header = () => {
           </svg>
         </div>
         <div className="header-options">
-          <button onClick={() => handleRegister()}>Registrarse</button>
-          <Modal/>
-          <button onClick={() => handleLogin()}>Iniciar Sesion</button>
+          {data ? (
+            <>
+              <button onClick={() => navigate("/perfil")}> Perfil</button>
+              <Modal />
+            </>
+          ) : (
+            <>
+              <button onClick={() => handleRegister()}>Registrarse</button>
+              <button onClick={() => handleLogin()}>Iniciar Sesion</button>{" "}
+            </>
+          )}
         </div>
       </header>
       <hr />

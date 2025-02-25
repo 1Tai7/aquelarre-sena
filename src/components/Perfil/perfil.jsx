@@ -1,23 +1,20 @@
 import { useState } from "react";
-import "./register.css";
-import Footer from "../footer/footer";
-import Header from "../header/header";
+import "./perfil.css";
 import { useNavigate } from "react-router-dom";
-import { registerWithEmailAndPassword } from "../../firebase/auth";
+import { updateWithEmailAndPassword } from "../../firebase/auth";
 
-const Register = () => {
+const Perfil = () => {
   const navigate = useNavigate();
-
+  const data = JSON.parse(sessionStorage.getItem("data") || {});
   const [success, setSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(
-    localStorage.getItem("avatar") || ""
-  );
+  const [selectedEmoji, setSelectedEmoji] = useState(data?.imageUrl || "");
+
   const [formData, setFormData] = useState({
-    nombre: "",
-    alias: "",
-    contrasena: "",
-    email: "",
+    nombre: data?.name,
+    alias: data?.displayName,
+    contrasena: data?.password,
+    email: data?.email,
   });
   const [errors, setErrors] = useState({});
 
@@ -49,7 +46,7 @@ const Register = () => {
   };
 
   const handleSave = async () => {
-    const { user } = await registerWithEmailAndPassword({
+    const { user } = await updateWithEmailAndPassword({
       email: formData.email,
       password: formData.contrasena,
       displayName: formData.alias,
@@ -176,13 +173,20 @@ const Register = () => {
             <button type="submit">
               <strong>Enviar</strong>
             </button>
-            <a onClick={() => navigate("/login")}>Ya tengo una cuenta</a>
             {success && <p>Registro Exitoso!</p>}
           </form>
+          <button
+            onClick={() => {
+              sessionStorage.clear();
+              navigate("/");
+            }}
+          >
+            Cerrar sesion
+          </button>
         </section>
       </section>
     </>
   );
 };
 
-export default Register;
+export default Perfil;

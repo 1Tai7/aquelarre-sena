@@ -94,7 +94,6 @@ describe("Header Component", () => {
     );
     fireEvent.click(screen.getByText("Perfil"));
     expect(navigate).toHaveBeenCalledWith("/perfil");
-    expect(navigate).not.toHaveBeenCalledWith("/perfil");
   });
 
   it("renders search bar", () => {

@@ -8,8 +8,10 @@ const Perfil = () => {
   const data = JSON.parse(sessionStorage.getItem("data") || {});
   const [success, setSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(data?.imageUrl || "");
-
+  const [selectedEmoji, setSelectedEmoji] = useState(
+    data?.imageUrl || data?.photoURL
+  );
+  console.log("data", data);
   const [formData, setFormData] = useState({
     nombre: data?.name,
     alias: data?.displayName,

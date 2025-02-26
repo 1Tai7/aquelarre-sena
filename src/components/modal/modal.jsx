@@ -40,6 +40,8 @@ const Modal = () => {
       if (data) {
         setErrors({});
         setSuccess(true);
+        location.reload();
+        handleClose();
       }
     }
   };
